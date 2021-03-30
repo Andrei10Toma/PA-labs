@@ -10,6 +10,10 @@ struct Homework {
         , score(_score) { }
 };
 
+bool compare_2_homework(Homework a, Homework b) {
+        return a.score >= b.score;
+}
+
 class Task {
 public:
     void solve() {
@@ -32,10 +36,29 @@ private:
     }
 
     int get_result() {
-        // TODO: Aflati punctajul maxim pe care il puteti obtine planificand
-        // optim temele.
-
-        return 0;
+        int punctaj_optim = 0;
+        unsigned int i, j;
+        sort(hws.begin(), hws.end(), compare_2_homework);
+        for (i = 0; i < hws.size(); i++) {
+            cout << hws[i].score << " " << hws[i].deadline << endl;
+        }
+        map<int, bool> ocupied_weeks;
+        for (i = 0; i < hws.size(); i++) {
+            if (ocupied_weeks.find(hws[i].deadline) == ocupied_weeks.end()) {
+                ocupied_weeks[hws[i].deadline] = true;
+                punctaj_optim += hws[i].score;
+            }
+            else {
+                for (j = hws[i].deadline - 1; j >= 1; j--) {
+                    if (ocupied_weeks.find(j) == ocupied_weeks.end()) {
+                        ocupied_weeks[j] = true;
+                        punctaj_optim += hws[i].score;
+                        break;
+                    }
+                }
+            }
+        }
+        return punctaj_optim;
     }
 
     void print_output(int result) {

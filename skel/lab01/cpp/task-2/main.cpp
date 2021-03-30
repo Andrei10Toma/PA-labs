@@ -18,6 +18,30 @@ private:
     }
 
     double get_result() {
+        double mid, left, right;
+        if (n == 1) {
+            return 1;
+        }
+        else if (n < 1) {
+            left = n;
+            right = 1;
+        }
+        else {
+            left = 1;
+            right = n;
+        }
+        while (left <= right) {
+            mid = (left + right) / 2;
+            if (mid * mid > n) {
+                right = mid;
+            }
+            else if (mid * mid < n) {
+                left = mid;
+            }
+            else if (mid * mid - n <= 0.001) {
+                return mid;
+            }
+        }
         // TODO: Calculati sqrt(n) cu o precizie de 0.001
         // Precizie de 10^-x = |rezultatul vostru - rezultatul corect| <= 10^-x
         return 0.0;

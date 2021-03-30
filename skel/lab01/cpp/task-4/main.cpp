@@ -18,8 +18,21 @@ private:
     }
 
     int fast_pow(int base, int exponent, int mod) {
-        // TODO: Calculati (base ^ exponent) % mod in O(log exponent)
-        return 0;
+        if (exponent == 0) {
+            return 1;
+        }
+
+        else if (exponent == 1) {
+            return base;
+        }
+
+        else if (exponent % 2 == 0) {
+            return (1LL * (fast_pow(base, exponent / 2, mod) % mod) * (fast_pow(base, exponent / 2, mod) % mod)) % mod;
+        }
+
+        else {
+            return (1LL * (fast_pow(base, exponent / 2 + 1, mod) % mod) * (fast_pow(base, exponent / 2, mod) % mod)) % mod;
+        }
     }
 
     int get_result() { return fast_pow(base, exponent, mod); }

@@ -24,9 +24,20 @@ private:
 
     int get_result() {
         // TODO: Aflati numarul minim de opriri necesare pentru a ajunge
-        // la destinatie.
-
-        return 0;
+        int number_stops = 0, tank = m - dist[0];
+        unsigned int i = 0;
+        while (i < dist.size() - 1) {
+            int distance = dist[i + 1] - dist[i];
+            if (distance <= tank) {
+                tank -= distance;
+                i++;
+            }
+            else {
+                number_stops++;
+                tank = m;
+            }
+        }
+        return number_stops;
     }
 
     void print_output(int result) {

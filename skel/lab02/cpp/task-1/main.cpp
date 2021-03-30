@@ -10,6 +10,13 @@ struct Object {
         , price(_price) { }
 };
 
+
+bool compare_by_price_per_weight(const Object &a, const Object &b) {
+    double price_per_weight_a = (double)a.price / (double)a.weight;
+    double price_per_weight_b = (double)b.price / (double)b.weight;
+    return price_per_weight_a > price_per_weight_b;
+}
+
 class Task {
 public:
     void solve() {
@@ -32,9 +39,25 @@ private:
     }
 
     double get_result() {
-        // TODO: Aflati profitul maxim care se poate obtine cu obiectele date.
-
-        return 0.0;
+        double profit = 0;
+        sort(objs.begin(), objs.end(), compare_by_price_per_weight);
+        for (auto i = objs.begin(); i != objs.end(); i++) {
+            cout << i->weight << " " << i->price << endl;
+        }
+        for (auto i = objs.begin(); i != objs.end(); i++) {
+            if (w <= 0) {
+                break;
+            }
+            if (i->weight < w) {
+                profit += i->price;
+                w -= i->weight;
+            }
+            else {
+                profit += (double)i->price * w / (double)i->weight;
+                w -= i->weight;
+            }
+        }
+        return profit;
     }
 
     void print_output(double result) {
